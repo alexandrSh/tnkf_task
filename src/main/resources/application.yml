@@ -1,1 +1,15 @@
+server:
+  port: 9000
+
+cb:
+  daily-info:
+    default-request-url: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
+    generated-sources.path: ru.cbr.web
+    request-url: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
+    soap-action: http://web.cbr.ru/GetCursOnDateXML
+
+logging.level:
+  org.springframework.ws.client.MessageTracing:
+    sent: TRACE
+    received: TRACE
 
