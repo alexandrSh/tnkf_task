@@ -1,9 +1,10 @@
-package tnkf.task.service;
+package tnkf.task.service.soap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tnkf.task.model.ws.GetCursOnDateXMLResponse;
+import tnkf.task.service.soap.DailyInfoClient;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;

@@ -1,4 +1,4 @@
-package tnkf.task.service;
+package tnkf.task.service.soap;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class DailyInfoClient extends WebServiceGatewaySupport {
 
     @Value("${cb.daily-info.request-url}")
     private String requestUrl;
-    @Value("${cb.daily-info.soap-action}")
+    @Value("${cb.daily-info.curs-on-date-action}")
     private String soapAction;
 
     public GetCursOnDateXMLResponse getCursOnDate(XMLGregorianCalendar date) {

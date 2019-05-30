@@ -3,13 +3,21 @@ server:
 
 cb:
   daily-info:
-    default-request-url: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
-    generated-sources.path: ru.cbr.web
     request-url: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
-    soap-action: http://web.cbr.ru/GetCursOnDateXML
+    curs-on-date-action: http://web.cbr.ru/GetCursOnDateXML
 
 logging.level:
   org.springframework.ws.client.MessageTracing:
     sent: TRACE
     received: TRACE
 
+jetty:
+  maxThreads: 150
+  minThreads: 8
+  idleTimeout: 60000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

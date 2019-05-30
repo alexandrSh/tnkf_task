@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import tnkf.task.service.DailyInfoClient;
+import tnkf.task.service.soap.DailyInfoClient;
 
 /**
  * WebServiceConfig.
@@ -17,7 +17,7 @@ public class CbrServiceConfig {
 
     private final String DEFAULT_REQUEST_URL;
 
-    public CbrServiceConfig(@Value("${cb.daily-info.default-request-url}") String defaultRequestUrl) {
+    public CbrServiceConfig(@Value("${cb.daily-info.request-url}") String defaultRequestUrl) {
         this.DEFAULT_REQUEST_URL = defaultRequestUrl;
     }
 

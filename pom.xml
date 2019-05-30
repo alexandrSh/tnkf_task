@@ -27,6 +27,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,76 +75,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                <!--<version>1.9</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>add-source</id>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>add-source</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<sources>-->
-                                <!--<source>${basedir}/target/generated/src/main/java</source>-->
-                            <!--</sources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
-            <!--<plugin>-->
-                <!--<groupId>org.jvnet.jax-ws-commons</groupId>-->
-                <!--<artifactId>jaxws-maven-plugin</artifactId>-->
-                <!--<version>2.3</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>wsimport</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<args>-->
-                                <!--<arg>-b</arg>-->
-                                <!--<arg>http://www.w3.org/2001/XMLSchema.xsd</arg>-->
-                            <!--</args>-->
-                            <!--<wsdlFiles>-->
-                                <!--<wsdlFile>${basedir}/src/main/resources/wsdl/DailyInfo.wsdl</wsdlFile>-->
-                            <!--</wsdlFiles>-->
-                            <!--&lt;!&ndash;<wsdlLocation>${basedir}/src/main/resources/wsdl/DailyInfo.wsdl</wsdlLocation>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<staleFile>${project.build.directory}/jaxws/stale/DailyInfo.asmx.stale</staleFile>&ndash;&gt;-->
-                            <!--<bindingFiles>-->
-                                <!--<bindingFile>${basedir}/src/main/resources/bindingfiles/customization.xjb</bindingFile>-->
-                            <!--</bindingFiles>-->
-                        <!--</configuration>-->
-                        <!--&lt;!&ndash;<id>wsimport-generate</id>&ndash;&gt;-->
-                        <!--<phase>generate-sources</phase>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>javax.xml</groupId>-->
-                        <!--<artifactId>webservices-api</artifactId>-->
-                        <!--<version>1.4</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-                <!--<configuration>-->
-                    <!--<vmArgs>-->
-                        <!--<vmArg>-Djavax.xml.accessExternalDTD=all</vmArg>-->
-                        <!--<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>-->
-                    <!--</vmArgs>-->
-                    <!--<keep>true</keep>-->
-                    <!--<sourceDestDir>${basedir}/target/generated/src/main/java</sourceDestDir>-->
-                    <!--&lt;!&ndash;<sourceDestDir>${basedir}/src/main/java</sourceDestDir>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<xnocompile>true</xnocompile>&ndash;&gt;-->
-                    <!--<verbose>true</verbose>-->
-                    <!--<extension>true</extension>-->
-                    <!--&lt;!&ndash;<catalog>${basedir}/src/jax-ws-catalog.xml</catalog>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<target>2.0</target>&ndash;&gt;-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
