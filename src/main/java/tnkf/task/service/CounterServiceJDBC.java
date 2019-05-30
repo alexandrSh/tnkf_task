@@ -30,12 +30,14 @@ public class CounterServiceJDBC implements CounterService {
         public void increment(String... names) {
             for (String name : names) {
                 Integer value = counterMap.getOrDefault(name, 0);
-                counterMap.put(name, value);
+                counterMap.put(name, value + 1);
             }
         }
 
         @Override
         public void close() {
+            Integer value = counterMap.getOrDefault("all", 0);
+            counterMap.put("all", value + 1);
             counterRepository.saveCounters(counterMap);
         }
     }

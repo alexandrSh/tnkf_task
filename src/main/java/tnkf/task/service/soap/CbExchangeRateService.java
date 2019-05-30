@@ -21,6 +21,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -35,8 +36,10 @@ public class CbExchangeRateService implements ExchangeRatesService {
         this.cbDailyInfoClient = cbDailyInfoClient;
     }
 
-    public List<ExchangeRate> getCurrentCursOnDate(Integer code) {
-        return getCurrentCursOnDate(valuteCursOnDate -> code.equals(valuteCursOnDate.getVcode()));
+    public Optional<ExchangeRate> getCurrentCursOnDate(Integer code) {
+        return getCurrentCursOnDate(valuteCursOnDate -> code.equals(valuteCursOnDate.getVcode())).stream()
+                .filter(er -> code.equals(er.getCode().getOkbCode()))
+                .findFirst();
     }
 
 
@@ -51,7 +54,7 @@ public class CbExchangeRateService implements ExchangeRatesService {
             final LocalDate onDate = LocalDate.parse(String.valueOf(valuteData.getOnDate()), onDateFormatter);
 
             if (date.equals(onDate)) {
-                throw new DailyInfoException("CBR has't volute curs on today");
+//                throw new DailyInfoException("CBR has't volute curs on today");
             }
 
             exchangeRates = valuteData.getValuteCursOnDate().stream()

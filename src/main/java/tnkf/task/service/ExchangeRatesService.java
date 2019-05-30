@@ -2,7 +2,7 @@ package tnkf.task.service;
 
 import tnkf.task.model.entry.ExchangeRate;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * ExchageRatesService.
@@ -10,5 +10,5 @@ import java.util.List;
  * @author Aleksandr_Sharomov
  */
 public interface ExchangeRatesService {
-    List<ExchangeRate> getCurrentCursOnDate(Integer code);
+    Optional<ExchangeRate> getCurrentCursOnDate(Integer code);
 }

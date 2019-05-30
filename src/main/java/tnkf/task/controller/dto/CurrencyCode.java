@@ -10,11 +10,11 @@ import lombok.Getter;
  * @author Aleksandr_Sharomov
  */
 @Getter
-public class Valute {
-    private final Integer valuteCode;
+public class CurrencyCode {
+    private final Integer currencyCode;
 
     @JsonCreator
-    public Valute(@JsonProperty("valuteCode") Integer valuteCode) {
-        this.valuteCode = valuteCode;
+    public CurrencyCode(@JsonProperty("currencyCode") Integer currencyCode) {
+        this.currencyCode = currencyCode;
     }
 }

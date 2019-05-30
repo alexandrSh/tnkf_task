@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import tnkf.task.repository.CounterRepository;
+import tnkf.task.service.CounterService;
+import tnkf.task.service.CounterServiceJDBC;
 import tnkf.task.service.ExchangeCallCounterWrapper;
 import tnkf.task.service.ExchangeRatesService;
 import tnkf.task.service.soap.CbDailyInfoClient;
@@ -41,9 +44,14 @@ public class CbrServiceConfig {
     }
 
     @Bean
-    public ExchangeRatesService exchangeRatesService(CbDailyInfoClient dailyInfoClient) {
+    public CounterService counterService(CounterRepository counterRepository) {
+        return new CounterServiceJDBC(counterRepository);
+    }
+
+    @Bean
+    public ExchangeRatesService exchangeRatesService(CbDailyInfoClient dailyInfoClient, CounterService counterService) {
         CbExchangeRateService cbExchangeRateService = new CbExchangeRateService(dailyInfoClient);
-        return new ExchangeCallCounterWrapper(cbExchangeRateService, null);
+        return new ExchangeCallCounterWrapper(cbExchangeRateService, counterService);
     }
 
 

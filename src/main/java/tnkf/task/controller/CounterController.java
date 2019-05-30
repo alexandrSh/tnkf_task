@@ -1,56 +1,49 @@
 package tnkf.task.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tnkf.task.controller.dto.CenterStatistic;
-import tnkf.task.controller.dto.Valute;
-import tnkf.task.repository.CounterRepository;
+import tnkf.task.controller.dto.ConterRespose;
+import tnkf.task.controller.dto.CurrencyCode;
+import tnkf.task.model.entry.ExchangeRate;
 import tnkf.task.service.ExchangeRatesService;
 import tnkf.task.service.StatService;
 
-import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * CounterController.
  *
  * @author Aleksandr_Sharomov
  */
+@Slf4j
 @RestController
 public class CounterController {
 
-    private final ExchangeRatesService exchangeRate;
+    private final ExchangeRatesService exchangeRatesService;
     private final StatService statService;
-    private final CounterRepository counterRepository;
 
     @Autowired
-    public CounterController(ExchangeRatesService exchangeRate, StatService statService, CounterRepository counterRepository) {
-        this.exchangeRate = exchangeRate;
+    public CounterController(ExchangeRatesService exchangeRatesService, StatService statService) {
+        this.exchangeRatesService = exchangeRatesService;
         this.statService = statService;
-        this.counterRepository = counterRepository;
     }
 
 
     @GetMapping("/stat")
-    public CenterStatistic stat() {
+    public ConterRespose stat() {
         return statService.getStatistic();
     }
 
     @PostMapping("/action")
-    public ResponseEntity<Void> action(Valute valute) {
-        exchangeRate.getCurrentCursOnDate(valute.getValuteCode());
+    public ResponseEntity<Void> action(CurrencyCode currencyCode) {
+        Optional<ExchangeRate> currentCursOnDate = exchangeRatesService.getCurrentCursOnDate(currencyCode.getCurrencyCode());
+        log.debug("currentCursOnDate: {}", currentCursOnDate);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/counters")
-    public String stats() {
-        HashMap<String, Integer> counters = new HashMap<>();
-        counters.put("1",1);
-        counters.put("3",1);
-        counters.put("4",1);
-        counterRepository.saveCounters(counters);
-        return "s";
-    }
+
 }
