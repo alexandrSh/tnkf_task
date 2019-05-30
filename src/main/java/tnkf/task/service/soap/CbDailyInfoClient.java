@@ -16,7 +16,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * @author Aleksandr_Sharomov
  */
 @Slf4j
-public class DailyInfoClient extends WebServiceGatewaySupport {
+public class CbDailyInfoClient extends WebServiceGatewaySupport {
 
 
     @Value("${cb.daily-info.request-url}")

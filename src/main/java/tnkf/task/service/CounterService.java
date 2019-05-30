@@ -5,5 +5,6 @@ package tnkf.task.service;
  *
  * @author Aleksandr_Sharomov
  */
-public class CounterService {
+public interface CounterService {
+    Counter getCounter();
 }

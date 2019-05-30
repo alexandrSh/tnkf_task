@@ -17,8 +17,3 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
-              - column:
-                  name: last_name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false

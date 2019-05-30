@@ -1,6 +1,6 @@
 package tnkf.task.controller.dto;
 
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author Aleksandr_Sharomov
  */
-@Data
+@Value
 public class ConterRespose {
     private Integer totalSuccess;
     private Integer total;

@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import tnkf.task.service.soap.DailyInfoClient;
+import tnkf.task.service.ExchangeCallCounterWrapper;
+import tnkf.task.service.ExchangeRatesService;
+import tnkf.task.service.soap.CbDailyInfoClient;
+import tnkf.task.service.soap.CbExchangeRateService;
 
 /**
  * WebServiceConfig.
@@ -29,12 +32,18 @@ public class CbrServiceConfig {
     }
 
     @Bean
-    public DailyInfoClient cbDailyInfoClient(@Qualifier("CbDailyInfoMarshaller") Jaxb2Marshaller marshaller) {
-        DailyInfoClient client = new DailyInfoClient();
+    public CbDailyInfoClient dailyInfoClient(@Qualifier("CbDailyInfoMarshaller") Jaxb2Marshaller marshaller) {
+        CbDailyInfoClient client = new CbDailyInfoClient();
         client.setDefaultUri(DEFAULT_REQUEST_URL);
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
+    }
+
+    @Bean
+    public ExchangeRatesService exchangeRatesService(CbDailyInfoClient dailyInfoClient) {
+        CbExchangeRateService cbExchangeRateService = new CbExchangeRateService(dailyInfoClient);
+        return new ExchangeCallCounterWrapper(cbExchangeRateService, null);
     }
 
 
