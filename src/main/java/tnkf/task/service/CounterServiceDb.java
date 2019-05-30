@@ -9,21 +9,21 @@ import java.util.HashMap;
  *
  * @author Aleksandr_Sharomov
  */
-public class CounterServiceJDBC implements CounterService {
+public class CounterServiceDb implements CounterService {
 
     private final CounterRepository counterRepository;
 
-    public CounterServiceJDBC(CounterRepository counterRepository) {
+    public CounterServiceDb(CounterRepository counterRepository) {
         this.counterRepository = counterRepository;
     }
 
 
     @Override
     public Counter getCounter() {
-        return new JdbcCounter();
+        return new DbCounter();
     }
 
-    private final class JdbcCounter implements Counter {
+    private final class DbCounter implements Counter {
         private HashMap<String, Integer> counterMap = new HashMap<>();
 
         @Override

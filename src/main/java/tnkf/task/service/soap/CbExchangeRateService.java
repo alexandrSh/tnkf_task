@@ -54,7 +54,7 @@ public class CbExchangeRateService implements ExchangeRatesService {
             final LocalDate onDate = LocalDate.parse(String.valueOf(valuteData.getOnDate()), onDateFormatter);
 
             if (date.equals(onDate)) {
-//                throw new DailyInfoException("CBR has't volute curs on today");
+                throw new DailyInfoException("CBR has't exchange rate on today");
             }
 
             exchangeRates = valuteData.getValuteCursOnDate().stream()

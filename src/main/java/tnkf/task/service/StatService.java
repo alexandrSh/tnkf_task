@@ -1,6 +1,6 @@
 package tnkf.task.service;
 
-import tnkf.task.controller.dto.ConterRespose;
+import tnkf.task.controller.dto.CounterResponse;
 
 /**
  * StatService.
@@ -8,5 +8,5 @@ import tnkf.task.controller.dto.ConterRespose;
  * @author Aleksandr_Sharomov
  */
 public interface StatService {
-    ConterRespose getStatistic();
+    CounterResponse getStatistic();
 }

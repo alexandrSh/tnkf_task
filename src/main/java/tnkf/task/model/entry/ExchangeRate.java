@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * ValuteCurs.
+ * ExchangeRate.
  *
  * @author Aleksandr_Sharomov
  */

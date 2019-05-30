@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import tnkf.task.repository.CounterRepository;
 import tnkf.task.service.CounterService;
-import tnkf.task.service.CounterServiceJDBC;
+import tnkf.task.service.CounterServiceDb;
 import tnkf.task.service.ExchangeCallCounterWrapper;
 import tnkf.task.service.ExchangeRatesService;
 import tnkf.task.service.soap.CbDailyInfoClient;
@@ -45,7 +45,7 @@ public class CbrServiceConfig {
 
     @Bean
     public CounterService counterService(CounterRepository counterRepository) {
-        return new CounterServiceJDBC(counterRepository);
+        return new CounterServiceDb(counterRepository);
     }
 
     @Bean

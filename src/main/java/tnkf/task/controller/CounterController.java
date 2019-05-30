@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tnkf.task.controller.dto.ConterRespose;
+import tnkf.task.controller.dto.CounterResponse;
 import tnkf.task.controller.dto.CurrencyCode;
 import tnkf.task.model.entry.ExchangeRate;
 import tnkf.task.service.ExchangeRatesService;
@@ -34,7 +34,7 @@ public class CounterController {
 
 
     @GetMapping("/stat")
-    public ConterRespose stat() {
+    public CounterResponse stat() {
         return statService.getStatistic();
     }
 
