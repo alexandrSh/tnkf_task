@@ -1,6 +1,6 @@
 package tnkf.task.service;
 
-import tnkf.task.controller.dto.CenterStatistic;
+import tnkf.task.controller.dto.ConterRespose;
 
 /**
  * StatService.
@@ -8,5 +8,5 @@ import tnkf.task.controller.dto.CenterStatistic;
  * @author Aleksandr_Sharomov
  */
 public interface StatService {
-    CenterStatistic getStatistic();
+    ConterRespose getStatistic();
 }
