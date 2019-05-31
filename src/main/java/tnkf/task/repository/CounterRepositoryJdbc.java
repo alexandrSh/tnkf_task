@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,18 +78,20 @@ public class CounterRepositoryJdbc implements CounterRepository {
             updateCounter(name, counters.get(name));
         }
 
-        Map<String, Integer> newCounters = counters.entrySet().stream()
+        List<CounterRecord> newCounters = counters.entrySet().stream()
                 .filter(e -> !existCounters.contains(e.getKey()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .map(e -> new CounterRecord(e.getKey(), e.getValue()))
+                .sorted(Comparator.comparing(CounterRecord::getName))
+                .collect(Collectors.toList());
 
         if (!newCounters.isEmpty()) {
             log.debug("found new counters {}", newCounters);
         }
 
-        for (Map.Entry<String, Integer> e : newCounters.entrySet()) {
-            if (insertCounter(e.getKey(), e.getValue()) == 0) {
-                log.debug("insert counters {} was failed, try to update", e.getKey());
-                updateCounter(e.getKey(), e.getValue());
+        for (CounterRecord cr : newCounters) {
+            if (insertCounter(cr.getName(), cr.getValue()) == 0) {
+                log.debug("insert counters {} was failed, try to update", cr.getName());
+                updateCounter(cr.getName(), cr.getValue());
             }
         }
 
