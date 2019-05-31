@@ -17,7 +17,7 @@ public class ValuteData {
     @XmlElement(name = "ValuteCursOnDate", required = true, namespace = "")
     protected List<ValuteCursOnDate> valuteCursOnDate;
     @XmlAttribute(name = "OnDate")
-    protected Integer onDate;
+    protected String onDate;
 
     /**
      * Gets the value of the valuteCursOnDate property.
@@ -52,7 +52,7 @@ public class ValuteData {
      * @return possible object is
      * {@link Integer }
      */
-    public Integer getOnDate() {
+    public String getOnDate() {
         return onDate;
     }
 
@@ -62,7 +62,7 @@ public class ValuteData {
      * @param value allowed object is
      *              {@link Integer }
      */
-    public void setOnDate(Integer value) {
+    public void setOnDate(String value) {
         this.onDate = value;
     }
 }

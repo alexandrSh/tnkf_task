@@ -3,6 +3,7 @@ package tnkf.task.service;
 import tnkf.task.repository.CounterRepository;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CounterServiceImpl.
@@ -27,6 +28,11 @@ public class CounterServiceDb implements CounterService {
         private HashMap<String, Integer> counterMap = new HashMap<>();
 
         @Override
+        public Map<String, Integer> getCounters() {
+            return new HashMap<>(counterMap);
+        }
+
+        @Override
         public void increment(String... names) {
             for (String name : names) {
                 Integer value = counterMap.getOrDefault(name, 0);
@@ -36,8 +42,9 @@ public class CounterServiceDb implements CounterService {
 
         @Override
         public void close() {
-            Integer value = counterMap.getOrDefault("all", 0);
-            counterMap.put("all", value + 1);
+            if (counterMap.isEmpty()) {
+                return;
+            }
             counterRepository.saveCounters(counterMap);
         }
     }

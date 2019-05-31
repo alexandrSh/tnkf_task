@@ -13,6 +13,7 @@ import java.util.Map;
  * @author Aleksandr_Sharomov
  */
 public interface CounterRepository {
+
     List<CounterRecord> findAll();
 
     @Transactional(isolation = Isolation.READ_COMMITTED)

@@ -5,7 +5,7 @@ package tnkf.task.exception;
  *
  * @author Aleksandr_Sharomov
  */
-public class CounterException extends Exception {
+public class CounterException extends RuntimeException {
 
     public CounterException(String message) {
         super(message);

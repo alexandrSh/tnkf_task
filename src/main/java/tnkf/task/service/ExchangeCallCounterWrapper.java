@@ -1,7 +1,6 @@
 package tnkf.task.service;
 
 import lombok.extern.slf4j.Slf4j;
-import tnkf.task.exception.CounterException;
 import tnkf.task.model.entry.ExchangeRate;
 
 import java.util.Optional;
@@ -27,10 +26,11 @@ public class ExchangeCallCounterWrapper implements ExchangeRatesService {
     @Override
     public Optional<ExchangeRate> getCurrentCursOnDate(final Integer code) {
         try (Counter counter = counterService.getCounter()) {
+            counter.increment("all");
             Optional<ExchangeRate> currentCursOnDate = delegate.getCurrentCursOnDate(code);
             counter.increment("success", String.valueOf(code));
             return currentCursOnDate;
-        } catch (CounterException e) {
+        } catch (Exception e) {
             log.error("Count operation was failed", e);
         }
 

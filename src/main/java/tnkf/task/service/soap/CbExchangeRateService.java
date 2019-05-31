@@ -3,12 +3,14 @@ package tnkf.task.service.soap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tnkf.task.exception.CounterException;
 import tnkf.task.exception.DailyInfoException;
 import tnkf.task.model.entry.Code;
 import tnkf.task.model.entry.ExchangeRate;
 import tnkf.task.model.ws.GetCursOnDateXMLResponse;
 import tnkf.task.model.ws.ValuteCursOnDate;
 import tnkf.task.model.ws.ValuteData;
+import tnkf.task.service.Counter;
 import tnkf.task.service.ExchangeRatesService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -44,16 +46,16 @@ public class CbExchangeRateService implements ExchangeRatesService {
 
 
     private List<ExchangeRate> getCurrentCursOnDate(Predicate<? super ValuteCursOnDate> courseFilter) {
-        List<ExchangeRate> exchangeRates = new ArrayList<>();
-        LocalDate date = LocalDate.now();
+        List<ExchangeRate> exchangeRates;
+        LocalDate date = LocalDate.now().plusYears(10);
         try {
             GetCursOnDateXMLResponse response = cbDailyInfoClient.getCursOnDate(convertDate(date));
             GetCursOnDateXMLResponse.GetCursOnDateXMLResult cursOnDate = response.getGetCursOnDateXMLResult();
             ValuteData valuteData = cursOnDate.getValuteData();
 
-            final LocalDate onDate = LocalDate.parse(String.valueOf(valuteData.getOnDate()), onDateFormatter);
+            final LocalDate onDate = LocalDate.parse(valuteData.getOnDate(), onDateFormatter);
 
-            if (date.equals(onDate)) {
+            if (!date.equals(onDate)) {
                 throw new DailyInfoException("CBR has't exchange rate on today");
             }
 
@@ -67,6 +69,10 @@ public class CbExchangeRateService implements ExchangeRatesService {
 
         } catch (DatatypeConfigurationException | DateTimeParseException e) {
             log.error("Date ({}) could not converted. Exception is - {}", date, e);
+            throw new DailyInfoException("Date format exception", e);
+        } catch (Exception e){
+            log.error("Can't get exchange rate", e);
+            throw new DailyInfoException("Can't get exchange rate", e);
         }
         return exchangeRates;
     }

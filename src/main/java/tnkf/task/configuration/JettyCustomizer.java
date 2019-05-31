@@ -41,7 +41,7 @@ public class JettyCustomizer implements WebServerFactoryCustomizer<JettyServletW
         jetty.setThreadPool(instrumentedQueuedThreadPool);
     }
 
-    public class InstrumentedQueuedThreadPool extends QueuedThreadPool {
+    private class InstrumentedQueuedThreadPool extends QueuedThreadPool {
 
         private final MeterRegistry registry;
         private final Iterable<Tag> tags;

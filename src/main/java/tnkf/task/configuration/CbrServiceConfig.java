@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.transport.WebServiceMessageSender;
+import org.springframework.ws.transport.http.HttpUrlConnectionMessageSender;
 import tnkf.task.repository.CounterRepository;
 import tnkf.task.service.CounterService;
 import tnkf.task.service.CounterServiceDb;
@@ -12,6 +14,8 @@ import tnkf.task.service.ExchangeCallCounterWrapper;
 import tnkf.task.service.ExchangeRatesService;
 import tnkf.task.service.soap.CbDailyInfoClient;
 import tnkf.task.service.soap.CbExchangeRateService;
+
+import java.time.Duration;
 
 /**
  * WebServiceConfig.
@@ -21,10 +25,13 @@ import tnkf.task.service.soap.CbExchangeRateService;
 @Configuration
 public class CbrServiceConfig {
 
-    private final String DEFAULT_REQUEST_URL;
+    private final String defaultRequetUrl;
+    private final int timeout;
 
-    public CbrServiceConfig(@Value("${cb.daily-info.request-url}") String defaultRequestUrl) {
-        this.DEFAULT_REQUEST_URL = defaultRequestUrl;
+    public CbrServiceConfig(@Value("${cb.daily-info.request-url}") String defaultRequestUrl,
+                            @Value("${cb.daily-info.timeout}") int timeout) {
+        this.defaultRequetUrl = defaultRequestUrl;
+        this.timeout = timeout;
     }
 
     @Bean(name = "CbDailyInfoMarshaller")
@@ -35,12 +42,22 @@ public class CbrServiceConfig {
     }
 
     @Bean
-    public CbDailyInfoClient dailyInfoClient(@Qualifier("CbDailyInfoMarshaller") Jaxb2Marshaller marshaller) {
+    public CbDailyInfoClient dailyInfoClient(@Qualifier("CbDailyInfoMarshaller") Jaxb2Marshaller marshaller,
+                                             WebServiceMessageSender webServiceMessageSender) {
         CbDailyInfoClient client = new CbDailyInfoClient();
-        client.setDefaultUri(DEFAULT_REQUEST_URL);
+        client.setDefaultUri(defaultRequetUrl);
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
+        client.setMessageSender(webServiceMessageSender);
         return client;
+    }
+
+    @Bean
+    public WebServiceMessageSender webServiceMessageSender() {
+        HttpUrlConnectionMessageSender httpComponentsMessageSender = new HttpUrlConnectionMessageSender();
+        httpComponentsMessageSender.setConnectionTimeout(Duration.ofMillis(timeout));
+        httpComponentsMessageSender.setReadTimeout(Duration.ofMillis(timeout));
+        return httpComponentsMessageSender;
     }
 
     @Bean
