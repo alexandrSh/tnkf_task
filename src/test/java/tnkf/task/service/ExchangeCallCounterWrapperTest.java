@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -75,17 +76,19 @@ public class ExchangeCallCounterWrapperTest {
     @Test
     public void getCurrentCursOnDate_error() {
 
-        when(exchangeRatesService.getCurrentCursOnDate(eq(30))).thenThrow(new RuntimeException("message"));
+        RuntimeException runtimeException = new RuntimeException("message");
+        when(exchangeRatesService.getCurrentCursOnDate(eq(30))).thenThrow(runtimeException);
 
+        try {
+            exchangeCallCounterWrapper.getCurrentCursOnDate(30);
+            Assert.fail("Exception wasn't thrown");
+        }catch (Exception e){
+            assertSame(runtimeException, e);
+        }
 
-        Optional<ExchangeRate> resultRate = exchangeCallCounterWrapper.getCurrentCursOnDate(30);
-
-        assertFalse(resultRate.isPresent());
 
         Counter counter = counterService.getCounter();
         verify(counter, times(1)).close();
-
-
 
         assertThat(counter.getCounters(), hasEntry("all", 1));
         assertThat(counter.getCounters().size(), Matchers.is(1));
@@ -108,7 +111,6 @@ public class ExchangeCallCounterWrapperTest {
                         for (String s : names) {
                             map.put(s, 1);
                         }
-
                     }
 
                     @Override

@@ -1,5 +1,6 @@
 package tnkf.task.controller.dto;
 
+import lombok.Getter;
 import lombok.Value;
 
 import java.util.HashMap;
@@ -10,11 +11,16 @@ import java.util.Map;
  *
  * @author Aleksandr_Sharomov
  */
-@Value
+@Getter
 public class CounterResponse {
     private Integer totalSuccess;
     private Integer total;
     private Map<String, Integer> byCurrency = new HashMap<>();
+
+    private CounterResponse(Integer totalSuccess, Integer total) {
+        this.totalSuccess = totalSuccess;
+        this.total = total;
+    }
 
     public static class Builder {
         private Integer totalSuccess = 0;

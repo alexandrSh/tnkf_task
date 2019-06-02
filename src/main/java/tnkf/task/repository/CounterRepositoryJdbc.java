@@ -67,12 +67,10 @@ public class CounterRepositoryJdbc implements CounterRepository {
         parameters.addValue("names", counters.keySet());
 
         List<String> existCounters = namedParameterJdbcTemplate.query(
-                "SELECT id FROM counters WHERE id in (:names)",
+                "SELECT id FROM counters WHERE id in (:names) order by id",
                 parameters,
                 (rs, rowNum) -> rs.getString("id")
         );
-
-        Collections.sort(existCounters);
 
         for (String name : existCounters) {
             updateCounter(name, counters.get(name));

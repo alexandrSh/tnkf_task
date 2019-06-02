@@ -33,12 +33,12 @@ public class CounterController {
     }
 
 
-    @GetMapping("/stat")
+    @GetMapping(value = "/stat", produces = "application/json")
     public CounterResponse stat() {
         return statService.getStatistic();
     }
 
-    @PostMapping("/action")
+    @PostMapping(value = "/action", consumes = "application/json", produces = "application/json" )
     public ResponseEntity<Void> action(CurrencyCode currencyCode) {
         Optional<ExchangeRate> currentCursOnDate = exchangeRatesService.getCurrentCursOnDate(currencyCode.getCurrencyCode());
         log.debug("currentCursOnDate: {}", currentCursOnDate);

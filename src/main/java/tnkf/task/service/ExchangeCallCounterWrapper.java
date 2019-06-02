@@ -32,8 +32,7 @@ public class ExchangeCallCounterWrapper implements ExchangeRatesService {
             return currentCursOnDate;
         } catch (Exception e) {
             log.error("Count operation was failed", e);
+            throw e;
         }
-
-        return Optional.empty();
     }
 }

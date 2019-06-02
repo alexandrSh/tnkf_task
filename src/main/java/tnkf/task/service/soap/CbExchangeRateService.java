@@ -2,15 +2,12 @@ package tnkf.task.service.soap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import tnkf.task.exception.CounterException;
 import tnkf.task.exception.DailyInfoException;
 import tnkf.task.model.entry.Code;
 import tnkf.task.model.entry.ExchangeRate;
 import tnkf.task.model.ws.GetCursOnDateXMLResponse;
 import tnkf.task.model.ws.ValuteCursOnDate;
 import tnkf.task.model.ws.ValuteData;
-import tnkf.task.service.Counter;
 import tnkf.task.service.ExchangeRatesService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -20,7 +17,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +42,7 @@ public class CbExchangeRateService implements ExchangeRatesService {
 
 
     private List<ExchangeRate> getCurrentCursOnDate(Predicate<? super ValuteCursOnDate> courseFilter) {
-        List<ExchangeRate> exchangeRates;
-        LocalDate date = LocalDate.now().plusYears(10);
+        LocalDate date = LocalDate.now();
         try {
             GetCursOnDateXMLResponse response = cbDailyInfoClient.getCursOnDate(convertDate(date));
             GetCursOnDateXMLResponse.GetCursOnDateXMLResult cursOnDate = response.getGetCursOnDateXMLResult();
@@ -59,7 +54,7 @@ public class CbExchangeRateService implements ExchangeRatesService {
                 throw new DailyInfoException("CBR has't exchange rate on today");
             }
 
-            exchangeRates = valuteData.getValuteCursOnDate().stream()
+            return valuteData.getValuteCursOnDate().stream()
                     .filter(courseFilter)
                     .map(valuteCurs -> {
                         Code code = new Code(valuteCurs.getVcode(), valuteCurs.getVchCode());
@@ -70,11 +65,10 @@ public class CbExchangeRateService implements ExchangeRatesService {
         } catch (DatatypeConfigurationException | DateTimeParseException e) {
             log.error("Date ({}) could not converted. Exception is - {}", date, e);
             throw new DailyInfoException("Date format exception", e);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Can't get exchange rate", e);
             throw new DailyInfoException("Can't get exchange rate", e);
         }
-        return exchangeRates;
     }
 
 

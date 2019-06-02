@@ -59,17 +59,4 @@ public class CbrServiceConfig {
         httpComponentsMessageSender.setReadTimeout(Duration.ofMillis(timeout));
         return httpComponentsMessageSender;
     }
-
-    @Bean
-    public CounterService counterService(CounterRepository counterRepository) {
-        return new CounterServiceDb(counterRepository);
-    }
-
-    @Bean
-    public ExchangeRatesService exchangeRatesService(CbDailyInfoClient dailyInfoClient, CounterService counterService) {
-        CbExchangeRateService cbExchangeRateService = new CbExchangeRateService(dailyInfoClient);
-        return new ExchangeCallCounterWrapper(cbExchangeRateService, counterService);
-    }
-
-
 }
