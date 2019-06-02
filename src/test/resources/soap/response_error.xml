@@ -1,0 +1,5 @@
+<GetCursOnDateXMLResponse xmlns="http://web.cbr.ru/">
+    <GetCursOnDateXMLResult>
+        <ValuteData OnDate="Error" xmlns=""/>
+    </GetCursOnDateXMLResult>
+</GetCursOnDateXMLResponse>

@@ -4,8 +4,12 @@ server:
 cb:
   daily-info:
     request-url: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
-    curs-on-date-action: http://web.cbr.ru/GetCursOnDate
-    timeout: 60000
+    curs-on-date-action: http://web.cbr.ru/GetCursOnDateXML
+    timeout:
+      read: 60000
+      connection: 60000
+    connection:
+      max: 10
 
 logging.level:
   tnkf.task: DEBUG
@@ -23,7 +27,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: metrics
 
 spring:
   h2:
