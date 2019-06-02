@@ -1,13 +1,11 @@
 package tnkf.task.service;
 
-import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -47,7 +45,7 @@ public class StatServiceImplTest {
         assertThat(statistic, allOf(
                 hasProperty("totalSuccess", Matchers.equalTo(5)),
                 hasProperty("total", Matchers.equalTo(10)),
-                hasProperty("byCurrency", Matchers.hasEntry("840",5))
+                hasProperty("byCurrency", Matchers.hasEntry("840", 5))
         ));
     }
 

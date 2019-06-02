@@ -87,7 +87,7 @@ public class CbExchangeRateServiceTest {
         LocalDate now = LocalDate.now();
         String request = ResoursFile.getResource("/soap/request.xml",
                 Collections.singletonMap("#date#", now.format(requestFormatter)));
-        String response = ResoursFile.getResource("/soap/response_error.xml",Collections.emptyMap());
+        String response = ResoursFile.getResource("/soap/response_error.xml", Collections.emptyMap());
 
         Source requestPayload = new StringSource(request);
         Source responsePayload = new StringSource(response);

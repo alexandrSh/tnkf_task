@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -63,14 +62,14 @@ public class CounterControllerTest {
                         .content("{\"currencyCode\":840}")
         ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(content().string("{\"message\":\"error\"}"));
     }
 
     @Test
     public void testStat() throws Exception {
         CounterResponse counterResponse = new CounterResponse.Builder()
                 .addCounterValue("all", 10)
-                .addCounterValue("840",5)
+                .addCounterValue("840", 5)
                 .addCounterValue("success", 5)
                 .build();
 

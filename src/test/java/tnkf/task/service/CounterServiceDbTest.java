@@ -2,7 +2,7 @@ package tnkf.task.service;
 
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
 import static org.hamcrest.core.AllOf.allOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,17 +24,17 @@ public class CounterServiceDbTest {
     private CounterRepository counterRepository;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         counterRepository = Mockito.mock(CounterRepository.class);
         counterServiceDb = new CounterServiceDb(counterRepository);
     }
 
     @Test
-    public void testCounter(){
+    public void testCounter() {
         Counter counter = counterServiceDb.getCounter();
         counter.increment("first", "second", "third");
         counter.increment("second", "third");
-        counter.increment( "third");
+        counter.increment("third");
 
         Map<String, Integer> counters = counter.getCounters();
 
@@ -46,7 +46,7 @@ public class CounterServiceDbTest {
     }
 
     @Test
-    public void testRepositoryCall(){
+    public void testRepositoryCall() {
         Counter counter = counterServiceDb.getCounter();
         counter.increment("first", "second", "third");
         counter.close();
@@ -54,7 +54,7 @@ public class CounterServiceDbTest {
     }
 
     @Test
-    public void testRepositoryNoCall(){
+    public void testRepositoryNoCall() {
         Counter counter = counterServiceDb.getCounter();
         counter.close();
         verify(counterRepository, times(0)).saveCounters(any(Map.class));

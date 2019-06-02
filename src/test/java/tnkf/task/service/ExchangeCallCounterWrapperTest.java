@@ -2,10 +2,8 @@ package tnkf.task.service;
 
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
 import static org.hamcrest.core.AllOf.allOf;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -17,9 +15,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import tnkf.task.exception.CounterException;
-import tnkf.task.exception.DailyInfoException;
 import tnkf.task.model.entry.Code;
 import tnkf.task.model.entry.ExchangeRate;
 
@@ -82,7 +78,7 @@ public class ExchangeCallCounterWrapperTest {
         try {
             exchangeCallCounterWrapper.getCurrentCursOnDate(30);
             Assert.fail("Exception wasn't thrown");
-        }catch (Exception e){
+        } catch (Exception e) {
             assertSame(runtimeException, e);
         }
 
