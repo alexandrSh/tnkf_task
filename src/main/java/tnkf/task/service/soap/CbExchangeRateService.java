@@ -23,6 +23,9 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of {@link ExchangeRatesService} based on Daily Info service of the Central Bank of Russia.
+ */
 @Slf4j
 public class CbExchangeRateService implements ExchangeRatesService {
 
@@ -33,6 +36,10 @@ public class CbExchangeRateService implements ExchangeRatesService {
     public CbExchangeRateService(CbDailyInfoClient cbDailyInfoClient) {
         this.cbDailyInfoClient = cbDailyInfoClient;
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     public Optional<ExchangeRate> getCurrentCursOnDate(Integer code) {
         log.debug("getCurrentCursOnDate(): {}", code);

@@ -10,7 +10,7 @@ import tnkf.task.repository.CounterRepository;
 import java.util.List;
 
 /**
- * StatServiceImpl.
+ * Implementation of {@link StatService} with database repository.
  *
  * @author Aleksandr_Sharomov
  */
@@ -25,6 +25,9 @@ public class StatServiceImpl implements StatService {
         this.counterRepository = counterRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CounterResponse getStatistic() {
         List<CounterRecord> counters = counterRepository.findAll();

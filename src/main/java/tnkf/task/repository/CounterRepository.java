@@ -1,7 +1,5 @@
 package tnkf.task.repository;
 
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import tnkf.task.model.domen.CounterRecord;
 
 import java.util.List;
@@ -14,8 +12,17 @@ import java.util.Map;
  */
 public interface CounterRepository {
 
+    /**
+     * Find all CounterRecord.
+     *
+     * @return CounterRecords
+     */
     List<CounterRecord> findAll();
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    /**
+     * Store changes of counters.
+     *
+     * @param counters map of changes of counters. "name"->"change"
+     */
     void saveCounters(Map<String, Integer> counters);
 }

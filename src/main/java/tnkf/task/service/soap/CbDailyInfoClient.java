@@ -11,7 +11,7 @@ import tnkf.task.model.ws.GetCursOnDateXMLResponse;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * DailyInfo.
+ * Client of DailyInfo web service endpoint.
  *
  * @author Aleksandr_Sharomov
  */
@@ -24,6 +24,11 @@ public class CbDailyInfoClient extends WebServiceGatewaySupport {
     @Value("${cb.daily-info.curs-on-date-action}")
     private String soapAction;
 
+    /**
+     * Call GetCursOnDateXML action.
+     * @param date date
+     * @return exchange rates on a given date
+     */
     public GetCursOnDateXMLResponse getCursOnDate(XMLGregorianCalendar date) {
         log.debug("Start getCursOnDate with XMLGregorianCalendar: {}", date);
         GetCursOnDateXMLResponse response = null;

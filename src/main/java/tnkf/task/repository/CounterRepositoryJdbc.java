@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * CounterRepository.
+ * JDBC based implementation of {@link CounterRepository}.
  *
  * @author Aleksandr_Sharomov
  */

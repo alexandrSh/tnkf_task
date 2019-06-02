@@ -6,7 +6,11 @@ import tnkf.task.model.entry.ExchangeRate;
 import java.util.Optional;
 
 /**
- * CounterService.
+ * Wrapper over the service {@link ExchangeRatesService} allows to count the number of successful requests.
+ * uses special names in counters:
+ * "all" -> all request
+ * "success" -> success request
+ * and names equal currency code
  *
  * @author Aleksandr_Sharomov
  */
@@ -23,6 +27,12 @@ public class ExchangeCallCounterWrapper implements ExchangeRatesService {
         this.counterService = counterService;
     }
 
+    /**
+     * Count the number of successful requests and call the real {@link ExchangeRatesService} method.
+     *
+     * @param code currency
+     * @return ExchangeRate
+     */
     @Override
     public Optional<ExchangeRate> getCurrentCursOnDate(final Integer code) {
         try (Counter counter = counterService.getCounter()) {
