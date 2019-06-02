@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,7 +17,6 @@ import tnkf.task.model.domen.CounterRecord;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +46,7 @@ public class CounterRepositoryJdbc implements CounterRepository {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<CounterRecord> findAll() {
+        log.debug("findAll()");
         return namedParameterJdbcTemplate.query(
                 "SELECT id, value FROM counters",
                 (rs, rowNum) -> {
@@ -61,7 +60,7 @@ public class CounterRepositoryJdbc implements CounterRepository {
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void saveCounters(Map<String, Integer> counters) {
-        log.debug("saveCounters: {}", counters);
+        log.debug("saveCounters(): {}", counters);
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("names", counters.keySet());
@@ -93,11 +92,11 @@ public class CounterRepositoryJdbc implements CounterRepository {
             }
         }
 
-        log.debug("saveCounters: end", existCounters);
+        log.debug("saveCounters(): end", existCounters);
     }
 
     private int insertCounter(String name, Integer value) {
-        log.debug("insertCounter: {}, {}", name, value);
+        log.debug("insertCounter(): {}, {}", name, value);
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("id", name);
@@ -109,15 +108,15 @@ public class CounterRepositoryJdbc implements CounterRepository {
         try {
             insertedRow = namedParameterJdbcTemplate.update(sql, paramMap);
         } catch (DuplicateKeyException e) {
-            log.debug("duplicate exception catch");
+            log.debug("duplicate key exception catch");
         }
 
-        log.debug("insertCounter: end");
+        log.debug("insertCounter(): end");
         return insertedRow;
     }
 
     private void updateCounter(String name, Integer value) {
-        log.debug("updateCounter: {} {}", name, value);
+        log.debug("updateCounter(): {} {}", name, value);
 
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
                 "SELECT * FROM counters WHERE id = ? FOR UPDATE",
@@ -135,6 +134,6 @@ public class CounterRepositoryJdbc implements CounterRepository {
         };
         jdbcTemplate.query(pscf.newPreparedStatementCreator(new Object[]{name}), rch);
 
-        log.debug("updateCounter: end");
+        log.debug("updateCounter(): end");
     }
 }

@@ -1,5 +1,6 @@
 package tnkf.task.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tnkf.task.controller.dto.CounterResponse;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author Aleksandr_Sharomov
  */
+@Slf4j
 @Component
 public class StatServiceImpl implements StatService {
 
@@ -26,6 +28,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public CounterResponse getStatistic() {
         List<CounterRecord> counters = counterRepository.findAll();
+        log.debug("{} counter records was found");
         CounterResponse.Builder builder = new CounterResponse.Builder();
         for (CounterRecord counterRecord : counters) {
             builder.addCounterValue(counterRecord.getName(), counterRecord.getValue());

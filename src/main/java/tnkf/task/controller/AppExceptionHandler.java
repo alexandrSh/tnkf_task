@@ -1,5 +1,6 @@
 package tnkf.task.controller;
 
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,11 @@ public class AppExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<?> handleException(Exception e) {
         log.error("Error: ", e);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new Error(e.getMessage()));
+    }
+
+    @Value
+    public static class Error {
+        private String message;
     }
 }

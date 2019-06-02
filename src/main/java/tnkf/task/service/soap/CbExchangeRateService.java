@@ -35,6 +35,7 @@ public class CbExchangeRateService implements ExchangeRatesService {
     }
 
     public Optional<ExchangeRate> getCurrentCursOnDate(Integer code) {
+        log.debug("getCurrentCursOnDate(): {}", code);
         return getCurrentCursOnDate(valuteCursOnDate -> code.equals(valuteCursOnDate.getVcode())).stream()
                 .filter(er -> code.equals(er.getCode().getOkbCode()))
                 .findFirst();
@@ -73,10 +74,10 @@ public class CbExchangeRateService implements ExchangeRatesService {
 
 
     private XMLGregorianCalendar convertDate(LocalDate date) throws DatatypeConfigurationException {
-        log.debug("Get currency rate for date - {}", date);
+        log.trace("Get currency rate for date: {}", date);
         GregorianCalendar gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
         XMLGregorianCalendar xgcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
-        log.debug("Date has been converted - {}", date.toString());
+        log.trace("Date has been converted: {}", date.toString());
         return xgcal;
     }
 }

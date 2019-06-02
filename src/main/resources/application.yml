@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8080
 
 cb:
   daily-info:
@@ -13,10 +13,10 @@ cb:
 
 logging.level:
   tnkf.task: DEBUG
-  org.springframework.jdbc: TRACE
+  org.springframework.jdbc: INFO
   org.springframework.ws.client.MessageTracing:
-    sent: TRACE
-    received: TRACE
+    sent: INFO
+    received: INFO
 
 jetty:
   maxThreads: 150
