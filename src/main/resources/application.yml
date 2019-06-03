@@ -38,14 +38,9 @@ spring:
       driverClassName: org.h2.Driver
       username: sa
       password:
-#  datasource:
-#    platform: postgres
-#    url: jdbc:postgresql://localhost:5432/testdb
-#    username: alsh
-#    password: alsh
-  hikari:
-    connectionTimeout: 30000
-    idleTimeout: 60000
-    maxLifetime: 700000
-    minimumIdle: 2
-    maximumPoolSize: 5
+      hikari:
+        connectionTimeout: 30000
+        idleTimeout: 60000
+        maxLifetime: 700000
+        minimumIdle: 2
+        maximumPoolSize: 5
